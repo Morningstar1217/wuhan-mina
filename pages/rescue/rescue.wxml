@@ -254,5 +254,5 @@
 <button open-type="getUserInfo" bindgetuserinfo="onSeekHelpTap" class="seek-help seek-help-btn" wx:if="{{typeIndex==='1'}}"></button>
 <image class="seek-help" src="/images/can_help.png" mode="aspectFit" wx:if="{{typeIndex==='2'}}"></image>
 <button open-type="getUserInfo" bindgetuserinfo="onCanHelpTap" class="seek-help seek-help-btn" wx:if="{{typeIndex==='2'}}"></button>
-<image class="communicate" src="/images/communicate.png" mode="aspectFit" bindtap="onCommunicateTap"></image>
+<!-- <image class="communicate" src="/images/communicate.png" mode="aspectFit" bindtap="onCommunicateTap"></image> -->
 <!-- E=跳转按钮 -->

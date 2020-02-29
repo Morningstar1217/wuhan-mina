@@ -99,7 +99,8 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
+    wx.aldstat.sendEvent('我的能帮分享好友', {})
     return {
       title: '喂喂我-留守宠物救助平台',
       path: '/pages/rescue/rescue'
@@ -110,6 +111,7 @@ Page({
     this.setData({
       shareFlag: true
     })
+    wx.aldstat.sendEvent('我的能帮好友帮我加速', {})
   },
   closeShare() {
     this.setData({
@@ -224,6 +226,7 @@ Page({
         })
       }
     })
+    wx.aldstat.sendEvent('我的能帮朋友圈', {})
   },
   closePoster() {
     this.setData({

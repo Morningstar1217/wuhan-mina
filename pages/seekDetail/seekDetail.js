@@ -56,7 +56,7 @@ Page({
             that.createCanvas()
           })
         })
-      }, 800)
+      }, 1000)
     } else {
       //分享打开
       if (options.isSelf) {
@@ -71,7 +71,7 @@ Page({
               that.createCanvas()
             })
           })
-        }, 800)
+        }, 1000)
       } else {
         this.setData({
           id: options.id || arr[0].slice(3)
@@ -169,6 +169,7 @@ Page({
                 mask: false
               })
               that.getData()
+              wx.aldstat.sendEvent('我的求喂取消帮助', {})
             }
           }
           http.request(params)
@@ -181,6 +182,7 @@ Page({
     this.setData({
       shareFlag: true
     })
+    wx.aldstat.sendEvent('我的求喂好友帮我加速', {})
     // wx.requestSubscribeMessage({
     //   tmplIds: ['qkboRtOgBOyKVwuXZd4OCSoXw_y09RjPRiXElseuFhc'],
     //   success(res) {
@@ -201,7 +203,9 @@ Page({
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
+      wx.aldstat.sendEvent('我的求喂分享好友', {})
     }
+
     return {
       title: '喂喂我-留守宠物救助平台',
       path: '/pages/seekDetail/seekDetail?id=' + this.data.id + '&isSelf=0'
@@ -225,6 +229,7 @@ Page({
             icon: 'success'
           })
           that.getBoostData()
+          wx.aldstat.sendEvent('好友助力', {})
           callback && callback()
         }
       }
@@ -266,7 +271,8 @@ Page({
     }
   },
   //更新用户信息
-  updateUserInfo(item, callback) {
+  updateUserInfo (item, callback) {
+    let that  = this
     let params = {
       url: 'user/profile',
       type: 'PUT',
@@ -276,6 +282,9 @@ Page({
         gender: item.gender
       },
       sCallback: function(res) {
+        if (res.error_code !== 0) {
+          that.updateUserInfo(item, callback)
+        }
         callback && callback()
       }
     }
@@ -467,6 +476,7 @@ Page({
     wx.saveImageToPhotosAlbum({
       filePath: this.data.posterImg,
       success: result => {
+        wx.aldstat.sendEvent('我的求喂朋友圈', {})
         wx.showToast({
           title: '保存成功',
           icon: 'success'

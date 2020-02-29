@@ -310,7 +310,8 @@ Page({
         wx.getSetting({
           withSubscriptions: true,
           success: res => {
-            if (res.authSetting['scope.subscribeMessage']) {
+            console.log(res)
+            if (res.subscriptionsSetting.itemSettings) {
               wx.redirectTo({
                 url: '/pages/seekDetail/seekDetail?id=' + seekRes.data.id
               })

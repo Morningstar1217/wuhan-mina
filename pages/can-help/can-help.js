@@ -263,8 +263,12 @@ Page({
     // wx.getSetting({
     //   withSubscriptions: true,
     //   success: res => {
-    //     console.log(res)
-    //     if (res.authSetting['scope.subscribeMessage']) {
+    //     if (
+    //       res.subscriptionsSetting.itemSettings['Rm2KNe4VCq4zaI0kBBPn0H3_7AqoL-M7VUlAyK75rh8'] ===
+    //         'accept' &&
+    //       res.subscriptionsSetting.itemSettings['Rm2KNe4VCq4zaI0kBBPn0NOPTBnCG_At21NoBM33XZU'] ===
+    //         'accept'
+    //     ) {
     //       console.log(res)
     //     } else {
     //       wx.requestSubscribeMessage({
@@ -274,11 +278,9 @@ Page({
     //         ],
     //         success(res) {
     //           console.log(res)
-
     //         },
     //         fail: res => {
     //           console.log(res)
-
     //         }
     //       })
     //     }
@@ -309,7 +311,7 @@ Page({
           withSubscriptions: true,
           success: res => {
             console.log(res)
-            if (res.authSetting['scope.subscribeMessage']) {
+            if (res.subscriptionsSetting.itemSettings) {
               wx.redirectTo({
                 url: '/pages/helpDetail/helpDetail?id=' + helpRes.data.id
               })

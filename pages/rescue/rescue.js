@@ -212,6 +212,7 @@ Page({
         complete: () => {}
       })
     }
+    wx.aldstat.sendEvent('新建我能帮', {})
   },
   onCommunicateTap: function(e) {
     wx.navigateToMiniProgram({
@@ -535,9 +536,15 @@ Page({
   // 请求下一页数据
   _rqNextPage(e) {
     if (this.data.typeIndex === '1') {
-      if (this.data.hasPosition) {
-        if (this.data.seekHelp.has_next) {
-          this._rqDataBySelfLocation(this.data.seekHelp.next_num)
+      if (this.data.region[0] === '全国') {
+        if (this.data.hasPosition) {
+          if (this.data.seekHelp.has_next) {
+            this._rqDataBySelfLocation(this.data.seekHelp.next_num)
+          }
+        } else {
+          if (this.data.seekHelp.has_next) {
+            this._rqDataByPosition(this.data.seekHelp.next_num)
+          }
         }
       } else {
         if (this.data.seekHelp.has_next) {
@@ -622,6 +629,9 @@ Page({
       page: 1,
       region: config.region
     })
+    if (e.currentTarget.dataset.type === '2') {
+      wx.aldstat.sendEvent('点击tab我能帮', {})
+    }
     this._rqInitData()
   },
   //跳转详情
@@ -633,6 +643,7 @@ Page({
   },
   //更新用户信息
   updateUserInfo(item) {
+    let that = this
     let params = {
       url: 'user/profile',
       type: 'put',
@@ -641,7 +652,11 @@ Page({
         wx_avatar: item.avatarUrl,
         gender: item.gender
       },
-      sCallback: function(res) {}
+      sCallback: function(res) {
+        if (res.error_code !== 0) {
+          that.updateUserInfo(item)
+        }
+      }
     }
     http.request(params)
   },
